@@ -801,7 +801,7 @@ generate_report() {
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><title>HardHat Report</title>
 <style>body{font-family:monospace;background:#0a0e14;color:#c8d6e5;padding:20px;max-width:900px;margin:0 auto}
-h1{color:#ee0000}h2{color:#00d4ff;border-bottom:1px solid #1e2d3e;padding-bottom:8px}
+h1{color:#ee0000}h2{color:#ee0000;border-bottom:1px solid #1e2d3e;padding-bottom:8px}
 .pass{color:#2ed573}.fail{color:#ff4757}.warn{color:#ee0000}
 .stat{display:inline-block;padding:8px 16px;margin:4px;border:1px solid #1e2d3e;border-radius:6px}
 pre{background:#111922;padding:16px;border-radius:6px;overflow-x:auto;border:1px solid #1e2d3e}</style></head>

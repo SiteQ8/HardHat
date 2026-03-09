@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0f0f0f;--bg2:#1a1a1a;--surface:#222;--text:#e8e8e8;--text2:#999;--amber:#ee0000;--red:#ef4444;--green:#22c55e;--blue:#3b82f6;--purple:#8b5cf6;--cyan:#06b6d4;--border:#333;--mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif}
+:root{--bg:#0f0f0f;--bg2:#1a1a1a;--surface:#222;--text:#e8e8e8;--text2:#999;--redhat:#ee0000;--red:#ff3333;--green:#22c55e;--blue:#dd0000;--purple:#cc0000;--cyan:#bb0000;--border:#333;--mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh}
 .container{max-width:1100px;margin:0 auto;padding:0 20px}
 
@@ -17,40 +17,40 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .hero{padding:60px 0 40px;text-align:center;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,#ee000008 0%,transparent 60%);pointer-events:none}
 .hero-icon{font-size:4rem;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(238,0,0,0.3))}
-.hero h1{font-family:var(--mono);font-size:3rem;font-weight:700;color:var(--amber);letter-spacing:-1px}
+.hero h1{font-family:var(--mono);font-size:3rem;font-weight:700;color:var(--redhat);letter-spacing:-1px}
 .hero h1 span{color:var(--text2);font-size:1rem;font-weight:400;margin-left:8px}
 .hero-sub{font-size:1.05rem;color:var(--text2);margin:8px 0 24px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
 .hero-badges{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
 .hb{padding:4px 12px;border-radius:4px;font-family:var(--mono);font-size:0.7rem;font-weight:600;border:1px solid}
-.hb-amber{color:var(--amber);border-color:#ee000040;background:#ee000008}
-.hb-red{color:var(--red);border-color:#ef444440;background:#ef444408}
-.hb-blue{color:var(--blue);border-color:#3b82f640;background:#3b82f608}
-.hb-green{color:var(--green);border-color:#22c55e40;background:#22c55e08}
-.hb-purple{color:var(--purple);border-color:#8b5cf640;background:#8b5cf608}
-.hb-cyan{color:var(--cyan);border-color:#06b6d440;background:#06b6d408}
+.hb-redhat{color:var(--redhat);border-color:#ee000040;background:#ee000008}
+.hb-red{color:#cc0000;border-color:#cc000040;background:#cc000008}
+.hb-redhat{color:#ee0000;border-color:#ee000040;background:#ee000008}
+.hb-green{color:#ee0000;border-color:#ee000040;background:#ee000008}
+.hb-purple{color:#ee0000;border-color:#ee000040;background:#ee000008}
+.hb-cyan{color:#ee0000;border-color:#ee000040;background:#ee000008}
 .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .btn{padding:10px 24px;border-radius:8px;font-family:var(--mono);font-size:0.85rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .15s;display:inline-flex;align-items:center;gap:6px;border:none}
-.btn-primary{background:var(--amber);color:#000}.btn-primary:hover{background:#cc0000}
-.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}.btn-outline:hover{border-color:var(--amber);color:var(--amber)}
+.btn-primary{background:var(--redhat);.btn-primary:hover{background:#cc0000}}.btn-primary:hover{background:#cc0000}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}.btn-outline:hover{border-color:#ee0000;color:#ee0000}
 
 /* Terminal demo */
 .terminal{background:#0a0a0a;border:1px solid var(--border);border-radius:10px;overflow:hidden;max-width:700px;margin:40px auto;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
 .terminal-bar{background:#1a1a1a;padding:8px 14px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border)}
 .terminal-dot{width:10px;height:10px;border-radius:50%}
 .terminal-body{padding:16px;font-family:var(--mono);font-size:0.78rem;line-height:1.8;color:var(--text2);overflow-x:auto}
-.t-green{color:var(--green)}.t-red{color:var(--red)}.t-amber{color:var(--amber)}.t-cyan{color:var(--cyan)}.t-bold{color:var(--text);font-weight:600}
+.t-green{color:#ee0000}.t-red{color:#cc0000}.t-redhat{color:var(--redhat)}.t-cyan{color:#ee0000}.t-bold{color:var(--text);font-weight:600}
 
 /* Sections */
 .section{padding:48px 0}
-.section-title{font-family:var(--mono);font-size:0.82rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.section-title{font-family:var(--mono);font-size:0.82rem;font-weight:700;color:var(--redhat);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:24px;display:flex;align-items:center;gap:10px}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border)}
 
 /* Module cards */
 .mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
 .mod-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;transition:border-color .15s}
-.mod-card:hover{border-color:var(--amber)}
+.mod-card:hover{border-color:var(--redhat)}
 .mod-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.mod-num{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:0.72rem;font-weight:700;background:#ee000015;color:var(--amber);border:1px solid #ee000030;flex-shrink:0}
+.mod-num{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:0.72rem;font-weight:700;background:#ee000015;color:var(--redhat);border:1px solid #ee000030;flex-shrink:0}
 .mod-name{font-weight:600;font-size:0.92rem}
 .mod-cis{font-family:var(--mono);font-size:0.65rem;color:var(--text2)}
 .mod-desc{font-size:0.82rem;color:var(--text2);line-height:1.6;margin-bottom:8px}
@@ -61,23 +61,23 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px}
 @media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;text-align:center}
-.stat-num{font-family:var(--mono);font-size:2.2rem;font-weight:700;color:var(--amber)}
+.stat-num{font-family:var(--mono);font-size:2.2rem;font-weight:700;color:var(--redhat)}
 .stat-label{font-size:0.72rem;color:var(--text2);margin-top:4px}
 
 /* Install section */
 .install-code{background:#0a0a0a;border:1px solid var(--border);border-radius:8px;padding:16px;font-family:var(--mono);font-size:0.82rem;color:var(--text2);line-height:1.8;overflow-x:auto}
-.install-code .cmd{color:var(--green)}
+.install-code .cmd{color:#ee0000}
 .install-code .comment{color:var(--text2);opacity:0.5}
 
 /* Standards table */
 .std-table{width:100%;border-collapse:collapse;font-size:0.85rem}
-.std-table th{text-align:left;padding:10px;font-family:var(--mono);font-size:0.72rem;color:var(--amber);border-bottom:1px solid var(--border);text-transform:uppercase}
+.std-table th{text-align:left;padding:10px;font-family:var(--mono);font-size:0.72rem;color:var(--redhat);border-bottom:1px solid var(--border);text-transform:uppercase}
 .std-table td{padding:10px;border-bottom:1px solid var(--border);color:var(--text2)}
 .std-table tr:hover td{color:var(--text);background:var(--surface)}
 
 /* Footer */
 .footer{text-align:center;padding:32px 16px;font-size:0.78rem;color:var(--text2);border-top:1px solid var(--border)}
-.footer a{color:var(--amber);text-decoration:none}
+.footer a{color:var(--redhat);text-decoration:none}
 </style>
 </head>
 <body>
@@ -88,8 +88,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
         <h1>HardHat <span>v2.0</span></h1>
         <div class="hero-sub">The only tool you need to harden your Red Hat environment. 938 lines of pure Bash covering 100+ CIS, NIST, and STIG security checks across 11 modules.</div>
         <div class="hero-badges">
-            <span class="hb hb-amber">CIS Benchmark</span>
-            <span class="hb hb-blue">NIST 800-53</span>
+            <span class="hb hb-redhat">CIS Benchmark</span>
+            <span class="hb hb-redhat">NIST 800-53</span>
             <span class="hb hb-red">DISA STIG</span>
             <span class="hb hb-green">SELinux</span>
             <span class="hb hb-purple">11 Modules</span>
@@ -111,10 +111,10 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
         </div>
         <div class="terminal-body">
 <span class="t-green">$</span> <span class="t-bold">sudo ./hardhat.sh --audit</span><br><br>
-<span class="t-amber">  ██╗  ██╗ █████╗ ██████╗ ██████╗ ██╗  ██╗ █████╗ ████████╗</span><br>
-<span class="t-amber">  ██║  ██║██╔══██╗██╔══██╗██╔══██╗██║  ██║██╔══██╗╚══██╔══╝</span><br>
-<span class="t-amber">  ███████║███████║██████╔╝██║  ██║███████║███████║   ██║</span><br>
-<span class="t-amber">  ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝</span><br><br>
+<span class="t-redhat">  ██╗  ██╗ █████╗ ██████╗ ██████╗ ██╗  ██╗ █████╗ ████████╗</span><br>
+<span class="t-redhat">  ██║  ██║██╔══██╗██╔══██╗██╔══██╗██║  ██║██╔══██╗╚══██╔══╝</span><br>
+<span class="t-redhat">  ███████║███████║██████╔╝██║  ██║███████║███████║   ██║</span><br>
+<span class="t-redhat">  ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝</span><br><br>
 <span class="t-cyan">[INFO]</span> Detected RHEL version: 9<br>
 <span class="t-cyan">[INFO]</span> Mode: AUDIT ONLY<br><br>
 <span class="t-bold">━━━ 1. FILESYSTEM CONFIGURATION (CIS 1.1) ━━━</span><br>
@@ -126,12 +126,12 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 <span class="t-bold">━━━ 6. SSH SERVER HARDENING (CIS 5.2) ━━━</span><br>
 &nbsp;&nbsp;<span class="t-red">[FAIL]</span> CIS 5.2.x — SSH PermitRootLogin = 'yes' (expected: no)<br>
 &nbsp;&nbsp;<span class="t-green">[PASS]</span> CIS 5.2.x — SSH PermitEmptyPasswords = no<br>
-&nbsp;&nbsp;<span class="t-amber">[WARN]</span> CIS 5.2.13 — SSH Ciphers not explicitly configured<br><br>
+&nbsp;&nbsp;<span class="t-redhat">[WARN]</span> CIS 5.2.13 — SSH Ciphers not explicitly configured<br><br>
 <span class="t-bold">═══════════════════════════════════════════════════</span><br>
 <span class="t-bold">&nbsp;&nbsp;HardHat Hardening Summary</span><br>
 <span class="t-bold">═══════════════════════════════════════════════════</span><br>
-&nbsp;&nbsp;<span class="t-green">PASS:</span>&nbsp;&nbsp;78&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-red">FAIL:</span>&nbsp;&nbsp;15&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-amber">WARN:</span>&nbsp;&nbsp;8<br>
-&nbsp;&nbsp;Score: <span class="t-amber" style="font-weight:700">76%</span> — Needs improvement<br>
+&nbsp;&nbsp;<span class="t-green">PASS:</span>&nbsp;&nbsp;78&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-red">FAIL:</span>&nbsp;&nbsp;15&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-redhat">WARN:</span>&nbsp;&nbsp;8<br>
+&nbsp;&nbsp;Score: <span class="t-redhat" style="font-weight:700">76%</span> — Needs improvement<br>
         </div>
     </div>
 
@@ -186,11 +186,11 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
         <table class="std-table">
             <thead><tr><th>Standard</th><th>Coverage</th><th>Description</th></tr></thead>
             <tbody>
-                <tr><td style="color:var(--amber);font-weight:600">CIS Benchmark RHEL 8/9</td><td>Level 1 + Level 2</td><td>Industry gold standard for OS hardening</td></tr>
-                <tr><td style="color:var(--blue);font-weight:600">NIST SP 800-53</td><td>AC, AU, CM, IA, SC</td><td>Federal security and privacy controls</td></tr>
-                <tr><td style="color:var(--red);font-weight:600">DISA STIG</td><td>CAT I, II, III</td><td>DoD technical implementation guidance</td></tr>
-                <tr><td style="color:var(--purple);font-weight:600">NIST SP 800-171</td><td>Partial</td><td>Protecting CUI in non-federal systems</td></tr>
-                <tr><td style="color:var(--cyan);font-weight:600">PCI DSS v4.0</td><td>Partial</td><td>Payment card data protection</td></tr>
+                <tr><td style="color:var(--redhat);font-weight:600">CIS Benchmark RHEL 8/9</td><td>Level 1 + Level 2</td><td>Industry gold standard for OS hardening</td></tr>
+                <tr><td style="color:#ee0000;font-weight:600">NIST SP 800-53</td><td>AC, AU, CM, IA, SC</td><td>Federal security and privacy controls</td></tr>
+                <tr><td style="color:#cc0000;font-weight:600">DISA STIG</td><td>CAT I, II, III</td><td>DoD technical implementation guidance</td></tr>
+                <tr><td style="color:#ee0000;font-weight:600">NIST SP 800-171</td><td>Partial</td><td>Protecting CUI in non-federal systems</td></tr>
+                <tr><td style="color:#ee0000;font-weight:600">PCI DSS v4.0</td><td>Partial</td><td>Payment card data protection</td></tr>
             </tbody>
         </table>
         </div>
