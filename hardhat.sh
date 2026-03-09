@@ -31,7 +31,7 @@ RHEL_VERSION=""
 
 # ─── Banner ───────────────────────────────────────────────────────────
 banner() {
-    echo -e "${YELLOW}"
+    echo -e "${RED}"
     cat << 'BANNER'
     ██╗  ██╗ █████╗ ██████╗ ██████╗ ██╗  ██╗ █████╗ ████████╗
     ██║  ██║██╔══██╗██╔══██╗██╔══██╗██║  ██║██╔══██╗╚══██╔══╝
@@ -801,8 +801,8 @@ generate_report() {
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><title>HardHat Report</title>
 <style>body{font-family:monospace;background:#0a0e14;color:#c8d6e5;padding:20px;max-width:900px;margin:0 auto}
-h1{color:#f0a500}h2{color:#00d4ff;border-bottom:1px solid #1e2d3e;padding-bottom:8px}
-.pass{color:#2ed573}.fail{color:#ff4757}.warn{color:#f0a500}
+h1{color:#ee0000}h2{color:#00d4ff;border-bottom:1px solid #1e2d3e;padding-bottom:8px}
+.pass{color:#2ed573}.fail{color:#ff4757}.warn{color:#ee0000}
 .stat{display:inline-block;padding:8px 16px;margin:4px;border:1px solid #1e2d3e;border-radius:6px}
 pre{background:#111922;padding:16px;border-radius:6px;overflow-x:auto;border:1px solid #1e2d3e}</style></head>
 <body><h1>🔨 HardHat Hardening Report</h1>
@@ -813,7 +813,7 @@ pre{background:#111922;padding:16px;border-radius:6px;overflow-x:auto;border:1px
 <div class="stat warn">WARN: ${WARN_COUNT}</div>
 <div class="stat">SKIP: ${SKIP_COUNT}</div>
 <div class="stat">TOTAL: ${TOTAL_COUNT}</div>
-<div class="stat" style="color:#f0a500;font-size:1.5em">SCORE: ${score}%</div>
+<div class="stat" style="color:#ee0000;font-size:1.5em">SCORE: ${score}%</div>
 <h2>Full Log</h2><pre>$(cat "$LOG_FILE" 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g')</pre>
 </body></html>
 HTMLEOF

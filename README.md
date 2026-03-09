@@ -4,14 +4,14 @@
 
 <br>
 
-[![Version](https://img.shields.io/badge/version-2.0-f59e0b?style=flat-square)]()
+[![Version](https://img.shields.io/badge/version-2.0-ee0000?style=flat-square)]()
 [![License](https://img.shields.io/badge/license-MIT-10b981?style=flat-square)](LICENSE)
 [![RHEL](https://img.shields.io/badge/RHEL-8%20%7C%209-ef4444?style=flat-square)]()
 [![CIS](https://img.shields.io/badge/CIS_Benchmark-aligned-3b82f6?style=flat-square)]()
 [![NIST](https://img.shields.io/badge/NIST_800--53-aligned-8b5cf6?style=flat-square)]()
 [![DISA STIG](https://img.shields.io/badge/DISA_STIG-aligned-06b6d4?style=flat-square)]()
 [![Bash](https://img.shields.io/badge/pure-Bash-121011?style=flat-square&logo=gnu-bash&logoColor=white)]()
-[![Checks](https://img.shields.io/badge/checks-100+-f59e0b?style=flat-square)]()
+[![Checks](https://img.shields.io/badge/checks-100+-ee0000?style=flat-square)]()
 
 **The only tool you need to harden your Red Hat environment.**
 
