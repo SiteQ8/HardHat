@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="HardHat — Red Hat Enterprise Linux Hardening Tool. CIS Benchmark, NIST 800-53, DISA STIG aligned.">
+<title>HardHat — RHEL Hardening Tool</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔨</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f0f0f;--bg2:#1a1a1a;--surface:#222;--text:#e8e8e8;--text2:#999;--amber:#f59e0b;--red:#ef4444;--green:#22c55e;--blue:#3b82f6;--purple:#8b5cf6;--cyan:#06b6d4;--border:#333;--mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+/* Hero */
+.hero{padding:60px 0 40px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,#f59e0b08 0%,transparent 60%);pointer-events:none}
+.hero-icon{font-size:4rem;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(245,158,11,0.3))}
+.hero h1{font-family:var(--mono);font-size:3rem;font-weight:700;color:var(--amber);letter-spacing:-1px}
+.hero h1 span{color:var(--text2);font-size:1rem;font-weight:400;margin-left:8px}
+.hero-sub{font-size:1.05rem;color:var(--text2);margin:8px 0 24px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
+.hero-badges{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.hb{padding:4px 12px;border-radius:4px;font-family:var(--mono);font-size:0.7rem;font-weight:600;border:1px solid}
+.hb-amber{color:var(--amber);border-color:#f59e0b40;background:#f59e0b08}
+.hb-red{color:var(--red);border-color:#ef444440;background:#ef444408}
+.hb-blue{color:var(--blue);border-color:#3b82f640;background:#3b82f608}
+.hb-green{color:var(--green);border-color:#22c55e40;background:#22c55e08}
+.hb-purple{color:var(--purple);border-color:#8b5cf640;background:#8b5cf608}
+.hb-cyan{color:var(--cyan);border-color:#06b6d440;background:#06b6d408}
+.hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{padding:10px 24px;border-radius:8px;font-family:var(--mono);font-size:0.85rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .15s;display:inline-flex;align-items:center;gap:6px;border:none}
+.btn-primary{background:var(--amber);color:#000}.btn-primary:hover{background:#d4890a}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}.btn-outline:hover{border-color:var(--amber);color:var(--amber)}
+
+/* Terminal demo */
+.terminal{background:#0a0a0a;border:1px solid var(--border);border-radius:10px;overflow:hidden;max-width:700px;margin:40px auto;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.terminal-bar{background:#1a1a1a;padding:8px 14px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border)}
+.terminal-dot{width:10px;height:10px;border-radius:50%}
+.terminal-body{padding:16px;font-family:var(--mono);font-size:0.78rem;line-height:1.8;color:var(--text2);overflow-x:auto}
+.t-green{color:var(--green)}.t-red{color:var(--red)}.t-amber{color:var(--amber)}.t-cyan{color:var(--cyan)}.t-bold{color:var(--text);font-weight:600}
+
+/* Sections */
+.section{padding:48px 0}
+.section-title{font-family:var(--mono);font-size:0.82rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Module cards */
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.mod-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;transition:border-color .15s}
+.mod-card:hover{border-color:var(--amber)}
+.mod-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.mod-num{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:0.72rem;font-weight:700;background:#f59e0b15;color:var(--amber);border:1px solid #f59e0b30;flex-shrink:0}
+.mod-name{font-weight:600;font-size:0.92rem}
+.mod-cis{font-family:var(--mono);font-size:0.65rem;color:var(--text2)}
+.mod-desc{font-size:0.82rem;color:var(--text2);line-height:1.6;margin-bottom:8px}
+.mod-tags{display:flex;gap:4px;flex-wrap:wrap}
+.mod-tag{padding:2px 8px;border-radius:4px;font-family:var(--mono);font-size:0.62rem;background:var(--bg);color:var(--text2);border:1px solid var(--border)}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;text-align:center}
+.stat-num{font-family:var(--mono);font-size:2.2rem;font-weight:700;color:var(--amber)}
+.stat-label{font-size:0.72rem;color:var(--text2);margin-top:4px}
+
+/* Install section */
+.install-code{background:#0a0a0a;border:1px solid var(--border);border-radius:8px;padding:16px;font-family:var(--mono);font-size:0.82rem;color:var(--text2);line-height:1.8;overflow-x:auto}
+.install-code .cmd{color:var(--green)}
+.install-code .comment{color:var(--text2);opacity:0.5}
+
+/* Standards table */
+.std-table{width:100%;border-collapse:collapse;font-size:0.85rem}
+.std-table th{text-align:left;padding:10px;font-family:var(--mono);font-size:0.72rem;color:var(--amber);border-bottom:1px solid var(--border);text-transform:uppercase}
+.std-table td{padding:10px;border-bottom:1px solid var(--border);color:var(--text2)}
+.std-table tr:hover td{color:var(--text);background:var(--surface)}
+
+/* Footer */
+.footer{text-align:center;padding:32px 16px;font-size:0.78rem;color:var(--text2);border-top:1px solid var(--border)}
+.footer a{color:var(--amber);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="container">
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-icon">🔨</div>
+        <h1>HardHat <span>v2.0</span></h1>
+        <div class="hero-sub">The only tool you need to harden your Red Hat environment. 938 lines of pure Bash covering 100+ CIS, NIST, and STIG security checks across 11 modules.</div>
+        <div class="hero-badges">
+            <span class="hb hb-amber">CIS Benchmark</span>
+            <span class="hb hb-blue">NIST 800-53</span>
+            <span class="hb hb-red">DISA STIG</span>
+            <span class="hb hb-green">SELinux</span>
+            <span class="hb hb-purple">11 Modules</span>
+            <span class="hb hb-cyan">HTML Reports</span>
+        </div>
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="https://github.com/SiteQ8/HardHat">⭐ View on GitHub</a>
+            <a class="btn btn-outline" href="https://raw.githubusercontent.com/SiteQ8/HardHat/main/hardhat.sh">📥 Download Script</a>
+        </div>
+    </div>
+
+    <!-- Terminal Demo -->
+    <div class="terminal">
+        <div class="terminal-bar">
+            <div class="terminal-dot" style="background:#ff5f57"></div>
+            <div class="terminal-dot" style="background:#febc2e"></div>
+            <div class="terminal-dot" style="background:#28c840"></div>
+            <span style="font-family:var(--mono);font-size:0.7rem;color:var(--text2);margin-left:8px">root@rhel9 ~/HardHat</span>
+        </div>
+        <div class="terminal-body">
+<span class="t-green">$</span> <span class="t-bold">sudo ./hardhat.sh --audit</span><br><br>
+<span class="t-amber">  ██╗  ██╗ █████╗ ██████╗ ██████╗ ██╗  ██╗ █████╗ ████████╗</span><br>
+<span class="t-amber">  ██║  ██║██╔══██╗██╔══██╗██╔══██╗██║  ██║██╔══██╗╚══██╔══╝</span><br>
+<span class="t-amber">  ███████║███████║██████╔╝██║  ██║███████║███████║   ██║</span><br>
+<span class="t-amber">  ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝</span><br><br>
+<span class="t-cyan">[INFO]</span> Detected RHEL version: 9<br>
+<span class="t-cyan">[INFO]</span> Mode: AUDIT ONLY<br><br>
+<span class="t-bold">━━━ 1. FILESYSTEM CONFIGURATION (CIS 1.1) ━━━</span><br>
+&nbsp;&nbsp;<span class="t-green">[PASS]</span> CIS 1.1.1 — Filesystem 'cramfs' is not loaded<br>
+&nbsp;&nbsp;<span class="t-green">[PASS]</span> CIS 1.1.1 — Filesystem 'squashfs' is not loaded<br>
+&nbsp;&nbsp;<span class="t-green">[PASS]</span> CIS 1.1.2 — /tmp is a separate partition<br><br>
+<span class="t-bold">━━━ 4. MANDATORY ACCESS CONTROL (CIS 1.6) ━━━</span><br>
+&nbsp;&nbsp;<span class="t-green">[PASS]</span> CIS 1.6.1.4 — SELinux mode: Enforcing<br><br>
+<span class="t-bold">━━━ 6. SSH SERVER HARDENING (CIS 5.2) ━━━</span><br>
+&nbsp;&nbsp;<span class="t-red">[FAIL]</span> CIS 5.2.x — SSH PermitRootLogin = 'yes' (expected: no)<br>
+&nbsp;&nbsp;<span class="t-green">[PASS]</span> CIS 5.2.x — SSH PermitEmptyPasswords = no<br>
+&nbsp;&nbsp;<span class="t-amber">[WARN]</span> CIS 5.2.13 — SSH Ciphers not explicitly configured<br><br>
+<span class="t-bold">═══════════════════════════════════════════════════</span><br>
+<span class="t-bold">&nbsp;&nbsp;HardHat Hardening Summary</span><br>
+<span class="t-bold">═══════════════════════════════════════════════════</span><br>
+&nbsp;&nbsp;<span class="t-green">PASS:</span>&nbsp;&nbsp;78&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-red">FAIL:</span>&nbsp;&nbsp;15&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-amber">WARN:</span>&nbsp;&nbsp;8<br>
+&nbsp;&nbsp;Score: <span class="t-amber" style="font-weight:700">76%</span> — Needs improvement<br>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stat"><div class="stat-num">938</div><div class="stat-label">Lines of Code</div></div>
+        <div class="stat"><div class="stat-num">11</div><div class="stat-label">Modules</div></div>
+        <div class="stat"><div class="stat-num">100+</div><div class="stat-label">Security Checks</div></div>
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label">Standards</div></div>
+    </div>
+
+    <!-- Modules -->
+    <div class="section">
+        <div class="section-title">Hardening Modules</div>
+        <div class="mod-grid">
+            <div class="mod-card"><div class="mod-header"><div class="mod-num">1</div><div><div class="mod-name">Filesystem</div><div class="mod-cis">CIS 1.1</div></div></div><div class="mod-desc">Disable unused FS (cramfs, squashfs, udf, hfs), /tmp partitioning, mount options, sticky bit enforcement.</div><div class="mod-tags"><span class="mod-tag">15+ checks</span><span class="mod-tag">auto-fix</span></div></div>
+            <div class="mod-card"><div class="mod-header"><div class="mod-num">2</div><div><div class="mod-name">Packages & Integrity</div><div class="mod-cis">CIS 1.2-1.3</div></div></div><div class="mod-desc">GPG keys, gpgcheck enforcement, pending updates, AIDE file integrity monitoring.</div><div class="mod-tags"><span class="mod-tag">4 checks</span><span class="mod-tag">AIDE</span></div></div>
+            <div class="mod-card"><div class="mod-header"><div class="mod-num">3</div><div><div class="mod-name">Boot & Process</div><div class="mod-cis">CIS 1.4-1.5</div></div></div><div class="mod-desc">GRUB2 bootloader password, config permissions, core dump restriction, ASLR.</div><div class="mod-tags"><span class="mod-tag">4 checks</span><span class="mod-tag">GRUB2</span></div></div>
+            <div class="mod-card"><div class="mod-header"><div class="mod-num">4</div><div><div class="mod-name">SELinux</div><div class="mod-cis">CIS 1.6</div></div></div><div class="mod-desc">SELinux installed, not disabled, targeted policy, Enforcing mode, unconfined services.</div><div class="mod-tags"><span class="mod-tag">5 checks</span><span class="mod-tag">MAC</span></div></div>
+            <div class="mod-card"><div class="mod-header"><div class="mod-num">5</div><div><div class="mod-name">Network</div><div class="mod-cis">CIS 3.1-3.5</div></div></div><div class="mod-desc">20 sysctl params (IP forwarding, redirects, SYN cookies, martians), firewall, wireless, protocols.</div><div class="mod-tags"><span class="mod-tag">25+ checks</span><span class="mod-tag">sysctl</span><span class="mod-tag">firewall</span></div></div>
+            <div class="mod-card"><div class="mod-header"><div class="mod-num">6</div><div><div class="mod-name">SSH Server</div><div class="mod-cis">CIS 5.2</div></div></div><div class="mod-desc">17 sshd_config params, strong ciphers/MACs, root login, timeouts, X11, TCP forwarding.</div><div class="mod-tags"><span class="mod-tag">20+ checks</span><span class="mod-tag">crypto</span></div></div>
+            <div class="mod-card"><div class="mod-header"><div class="mod-num">7</div><div><div class="mod-name">User Accounts</div><div class="mod-cis">CIS 5.3-5.6</div></div></div><div class="mod-desc">Password policy, system accounts, UID 0 audit, empty passwords, umask, su restriction.</div><div class="mod-tags"><span class="mod-tag">10+ checks</span><span class="mod-tag">PAM</span></div></div>
+            <div class="mod-card"><div class="mod-header"><div class="mod-num">8</div><div><div class="mod-name">Audit & Logging</div><div class="mod-cis">CIS 4.1-4.2</div></div></div><div class="mod-desc">auditd + 10 audit rules (time, hostname, identity, sudo, logins, SELinux), rsyslog, log perms.</div><div class="mod-tags"><span class="mod-tag">8+ checks</span><span class="mod-tag">auditd</span></div></div>
+            <div class="mod-card"><div class="mod-header"><div class="mod-num">9</div><div><div class="mod-name">Services</div><div class="mod-cis">CIS 2.1-2.2</div></div></div><div class="mod-desc">Disable 21 unnecessary services (avahi, cups, telnet, rsh, NFS, SNMP). NTP validation.</div><div class="mod-tags"><span class="mod-tag">22+ checks</span><span class="mod-tag">systemd</span></div></div>
+            <div class="mod-card"><div class="mod-header"><div class="mod-num">10</div><div><div class="mod-name">File Permissions</div><div class="mod-cis">CIS 6.1-6.2</div></div></div><div class="mod-desc">Critical file permissions, world-writable files, unowned files, SUID/SGID binary audit.</div><div class="mod-tags"><span class="mod-tag">12+ checks</span><span class="mod-tag">integrity</span></div></div>
+            <div class="mod-card"><div class="mod-header"><div class="mod-num">11</div><div><div class="mod-name">Login Banners</div><div class="mod-cis">CIS 1.7</div></div></div><div class="mod-desc">Warning banners for /etc/motd, /etc/issue, /etc/issue.net. OS info leakage detection.</div><div class="mod-tags"><span class="mod-tag">4+ checks</span><span class="mod-tag">compliance</span></div></div>
+        </div>
+    </div>
+
+    <!-- Install -->
+    <div class="section">
+        <div class="section-title">Quick Start</div>
+        <div class="install-code">
+<span class="comment"># Clone the repo</span><br>
+<span class="cmd">git clone https://github.com/SiteQ8/HardHat.git</span><br>
+<span class="cmd">cd HardHat</span><br><br>
+<span class="comment"># Audit only (safe, no changes)</span><br>
+<span class="cmd">sudo ./hardhat.sh --audit</span><br><br>
+<span class="comment"># Audit + auto-fix</span><br>
+<span class="cmd">sudo ./hardhat.sh --fix</span><br><br>
+<span class="comment"># Specific modules</span><br>
+<span class="cmd">sudo ./hardhat.sh --module ssh,network,selinux</span><br><br>
+<span class="comment"># Dry run (preview changes)</span><br>
+<span class="cmd">sudo ./hardhat.sh --dry-run</span>
+        </div>
+    </div>
+
+    <!-- Standards -->
+    <div class="section">
+        <div class="section-title">Standards Alignment</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+        <table class="std-table">
+            <thead><tr><th>Standard</th><th>Coverage</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td style="color:var(--amber);font-weight:600">CIS Benchmark RHEL 8/9</td><td>Level 1 + Level 2</td><td>Industry gold standard for OS hardening</td></tr>
+                <tr><td style="color:var(--blue);font-weight:600">NIST SP 800-53</td><td>AC, AU, CM, IA, SC</td><td>Federal security and privacy controls</td></tr>
+                <tr><td style="color:var(--red);font-weight:600">DISA STIG</td><td>CAT I, II, III</td><td>DoD technical implementation guidance</td></tr>
+                <tr><td style="color:var(--purple);font-weight:600">NIST SP 800-171</td><td>Partial</td><td>Protecting CUI in non-federal systems</td></tr>
+                <tr><td style="color:var(--cyan);font-weight:600">PCI DSS v4.0</td><td>Partial</td><td>Payment card data protection</td></tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>🔨 HardHat v2.0 — Your destination for a secured Red Hat environment</p>
+        <p>MIT License | <a href="https://github.com/SiteQ8/HardHat">GitHub</a> | <a href="https://github.com/SiteQ8">@SiteQ8</a> — Ali AlEnezi 🇰🇼</p>
+        <p style="margin-top:8px;opacity:0.5">CIS Benchmark · NIST 800-53 · DISA STIG · 938 lines of pure Bash</p>
+    </div>
+</div>
+</body>
+</html>
