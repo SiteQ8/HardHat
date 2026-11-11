@@ -31,17 +31,17 @@ One script. 11 modules. 100+ checks. Your Red Hat — secured.
 
 ### Why HardHat?
 
-- **Single script** — no dependencies, no agents, no frameworks. Just Bash.
-- **Audit + Fix** — find gaps AND remediate them automatically
-- **Auto-backup** — every config change is backed up before modification
-- **HTML reports** — professional reports for compliance evidence
-- **Modular** — run all checks or target specific modules
-- **CIS/NIST/STIG** — mapped to industry standards with control IDs
-- **RHEL 8 & 9** — tested on RHEL, CentOS Stream, Rocky, Alma
+- **Single script**: no dependencies, no agents, no frameworks. Just Bash.
+- **Audit + Fix**: find gaps AND remediate them automatically
+- **Auto-backup**: every config change is backed up before modification
+- **HTML reports**: professional reports for compliance evidence
+- **Modular**: run all checks or target specific modules
+- **CIS/NIST/STIG**: mapped to industry standards with control IDs
+- **RHEL 8 & 9**: tested on RHEL, CentOS Stream, Rocky, Alma
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Clone
@@ -72,7 +72,7 @@ curl -sL https://raw.githubusercontent.com/SiteQ8/HardHat/main/hardhat.sh | sudo
 
 ---
 
-## 📦 Modules
+## Modules
 
 HardHat includes **11 hardening modules** covering every critical area:
 
@@ -92,7 +92,7 @@ HardHat includes **11 hardening modules** covering every critical area:
 
 ---
 
-## 📋 Usage
+## Usage
 
 ```
 Usage: hardhat.sh [OPTIONS]
@@ -155,7 +155,7 @@ sudo ./hardhat.sh --dry-run
 
 ---
 
-## 📊 Reports
+## Reports
 
 HardHat generates **HTML reports** automatically with every run:
 
@@ -169,11 +169,11 @@ Reports are saved to `/var/log/hardhat/` for compliance evidence.
 
 ---
 
-## 📐 Standards Alignment
+## Standards Alignment
 
 | Standard | Coverage | Description |
 |----------|----------|-------------|
-| **CIS Benchmark RHEL 8/9** | Level 1 + Level 2 | Center for Internet Security — industry gold standard |
+| **CIS Benchmark RHEL 8/9** | Level 1 + Level 2 | Center for Internet Security, industry gold standard |
 | **NIST SP 800-53** | AC, AU, CM, IA, SC | Access Control, Audit, Config, Auth, System Protection |
 | **DISA STIG** | CAT I, II, III | Defense Information Systems Agency technical guidance |
 | **NIST SP 800-171** | Partial | Protecting CUI in non-federal systems |
@@ -181,7 +181,7 @@ Reports are saved to `/var/log/hardhat/` for compliance evidence.
 
 ---
 
-## 🔒 What Gets Hardened
+## What Gets Hardened
 
 ### Kernel & Filesystem
 - Disable cramfs, freevxfs, jffs2, hfs, hfsplus, squashfs, udf, usb-storage
@@ -233,7 +233,7 @@ Reports are saved to `/var/log/hardhat/` for compliance evidence.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 hardhat.sh
@@ -257,22 +257,22 @@ hardhat.sh
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions welcome:
 
-- 📋 **More CIS checks** — expand Level 2 and STIG coverage
-- 🐛 **Bug fixes** — test on different RHEL/CentOS versions
-- 📖 **Documentation** — improve module descriptions
-- 🧪 **Testing** — automated testing framework
-- 🌐 **Translations** — Arabic, Spanish, Chinese
-- 📦 **Packaging** — RPM/DEB packaging
+- **More CIS checks**: expand Level 2 and STIG coverage
+- **Bug fixes**: test on different RHEL/CentOS versions
+- **Documentation**: improve module descriptions
+- **Testing**: automated testing framework
+- **Translations**: Arabic, Spanish, Chinese
+- **Packaging**: RPM/DEB packaging
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 HardHat modifies system configuration files when run with `--fix`. **Always**:
 
@@ -286,14 +286,14 @@ This tool is provided as-is. The author is not responsible for any system issues
 
 ---
 
-## 📄 License
+## License
 
-MIT License — see [LICENSE](LICENSE).
+MIT License, see [LICENSE](LICENSE).
 
 ---
 
 <div align="center">
-  <sub>🔨 HardHat — Your destination for a secured Red Hat environment</sub><br>
-  <sub>Built by <a href="https://github.com/SiteQ8">@SiteQ8</a> — Ali AlEnezi 🇰🇼</sub><br>
+  <sub>🔨 HardHat, Your destination for a secured Red Hat environment</sub><br>
+  <sub>Built by <a href="https://github.com/SiteQ8">@SiteQ8</a>, Ali AlEnezi 🇰🇼</sub><br>
   <sub>CIS Benchmark · NIST 800-53 · DISA STIG · SELinux · 938 lines of pure Bash</sub>
 </div>
