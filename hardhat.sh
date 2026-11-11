@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ╔══════════════════════════════════════════════════════════════════════╗
-# ║  HardHat — Red Hat Enterprise Linux Hardening Tool                  ║
+# ║  HardHat - Red Hat Enterprise Linux Hardening Tool                  ║
 # ║  Version: 2.0.0                                                     ║
 # ║  Author:  Ali AlEnezi (@SiteQ8)                                     ║
 # ║  License: MIT                                                       ║
@@ -91,12 +91,12 @@ apply_fix() {
 
 # ═══════════════════════════════════════════════════════════════════════
 # MODULE 1: FILESYSTEM CONFIGURATION
-# CIS 1.1 — Filesystem configuration
+# CIS 1.1: Filesystem configuration
 # ═══════════════════════════════════════════════════════════════════════
 mod_filesystem() {
     log_section "1. FILESYSTEM CONFIGURATION (CIS 1.1)"
 
-    # 1.1.1 — Disable unused filesystems
+    # 1.1.1: Disable unused filesystems
     local unused_fs=("cramfs" "freevxfs" "jffs2" "hfs" "hfsplus" "squashfs" "udf" "vfat" "usb-storage")
     for fs in "${unused_fs[@]}"; do
         if lsmod | grep -q "^${fs} " 2>/dev/null; then
@@ -113,14 +113,14 @@ mod_filesystem() {
         fi
     done
 
-    # 1.1.2 — /tmp partition
+    # 1.1.2: /tmp partition
     if findmnt -n /tmp &>/dev/null; then
         log_pass "CIS 1.1.2 — /tmp is a separate partition"
     else
         log_fail "CIS 1.1.2 — /tmp is NOT a separate partition"
     fi
 
-    # 1.1.3-5 — /tmp mount options
+    # 1.1.3-5: /tmp mount options
     if findmnt -n /tmp 2>/dev/null | grep -q "nodev"; then
         log_pass "CIS 1.1.3 — /tmp has nodev option"
     else
@@ -137,7 +137,7 @@ mod_filesystem() {
         log_fail "CIS 1.1.5 — /tmp missing noexec option"
     fi
 
-    # 1.1.6-8 — /var, /var/tmp, /var/log partitions
+    # 1.1.6-8: /var, /var/tmp, /var/log partitions
     for part in /var /var/tmp /var/log /var/log/audit /home; do
         if findmnt -n "$part" &>/dev/null; then
             log_pass "CIS 1.1.x — ${part} is a separate partition"
@@ -146,7 +146,7 @@ mod_filesystem() {
         fi
     done
 
-    # 1.1.21 — Sticky bit on world-writable directories
+    # 1.1.21: Sticky bit on world-writable directories
     local sticky_issues
     sticky_issues=$(df --local -P 2>/dev/null | awk '{if (NR!=1) print $6}' | xargs -I{} find {} -xdev -type d \( -perm -0002 -a ! -perm -1000 \) 2>/dev/null | head -5)
     if [[ -z "$sticky_issues" ]]; then
@@ -162,19 +162,19 @@ mod_filesystem() {
 
 # ═══════════════════════════════════════════════════════════════════════
 # MODULE 2: SOFTWARE UPDATES & PACKAGE INTEGRITY
-# CIS 1.2-1.3 — Package manager configuration
+# CIS 1.2-1.3: Package manager configuration
 # ═══════════════════════════════════════════════════════════════════════
 mod_packages() {
     log_section "2. SOFTWARE UPDATES & INTEGRITY (CIS 1.2-1.3)"
 
-    # 1.2.1 — GPG keys configured
+    # 1.2.1: GPG keys configured
     if rpm -q gpg-pubkey &>/dev/null; then
         log_pass "CIS 1.2.1 — GPG keys are configured for package manager"
     else
         log_fail "CIS 1.2.1 — No GPG keys configured"
     fi
 
-    # 1.2.2 — gpgcheck enabled
+    # 1.2.2: gpgcheck enabled
     if grep -q "^gpgcheck=1" /etc/yum.conf 2>/dev/null || grep -q "^gpgcheck=1" /etc/dnf/dnf.conf 2>/dev/null; then
         log_pass "CIS 1.2.2 — gpgcheck is globally enabled"
     else
@@ -189,7 +189,7 @@ mod_packages() {
         fi
     fi
 
-    # 1.2.3 — Check for available updates
+    # 1.2.3: Check for available updates
     local updates_count
     updates_count=$(dnf check-update --quiet 2>/dev/null | grep -c "^[a-zA-Z]" || true)
     if [[ "$updates_count" -eq 0 ]]; then
@@ -198,7 +198,7 @@ mod_packages() {
         log_warn "CIS 1.2.3 — ${updates_count} package updates available"
     fi
 
-    # 1.3.1 — AIDE installed
+    # 1.3.1: AIDE installed
     if rpm -q aide &>/dev/null; then
         log_pass "CIS 1.3.1 — AIDE (file integrity) is installed"
     else
@@ -212,19 +212,19 @@ mod_packages() {
 
 # ═══════════════════════════════════════════════════════════════════════
 # MODULE 3: BOOT SETTINGS & SECURE BOOT
-# CIS 1.4-1.5 — Boot loader, process hardening
+# CIS 1.4-1.5: Boot loader, process hardening
 # ═══════════════════════════════════════════════════════════════════════
 mod_boot() {
     log_section "3. BOOT & PROCESS HARDENING (CIS 1.4-1.5)"
 
-    # 1.4.1 — Bootloader password
+    # 1.4.1: Bootloader password
     if grep -q "^GRUB2_PASSWORD" /boot/grub2/user.cfg 2>/dev/null || grep -q "^set superusers" /boot/grub2/grub.cfg 2>/dev/null; then
         log_pass "CIS 1.4.1 — GRUB2 bootloader password is set"
     else
         log_fail "CIS 1.4.1 — GRUB2 bootloader password is NOT set"
     fi
 
-    # 1.4.2 — Boot loader config permissions
+    # 1.4.2: Boot loader config permissions
     local grub_cfg="/boot/grub2/grub.cfg"
     if [[ -f "$grub_cfg" ]]; then
         local perms
@@ -241,7 +241,7 @@ mod_boot() {
         fi
     fi
 
-    # 1.5.1 — core dumps restricted
+    # 1.5.1: core dumps restricted
     if grep -q "hard core 0" /etc/security/limits.conf 2>/dev/null || grep -rq "hard core 0" /etc/security/limits.d/ 2>/dev/null; then
         log_pass "CIS 1.5.1 — Core dumps are restricted"
     else
@@ -253,7 +253,7 @@ mod_boot() {
         fi
     fi
 
-    # 1.5.3 — ASLR enabled
+    # 1.5.3: ASLR enabled
     local aslr
     aslr=$(sysctl -n kernel.randomize_va_space 2>/dev/null)
     if [[ "$aslr" == "2" ]]; then
@@ -270,26 +270,26 @@ mod_boot() {
 
 # ═══════════════════════════════════════════════════════════════════════
 # MODULE 4: MANDATORY ACCESS CONTROL (SELinux)
-# CIS 1.6 — SELinux
+# CIS 1.6: SELinux
 # ═══════════════════════════════════════════════════════════════════════
 mod_selinux() {
     log_section "4. MANDATORY ACCESS CONTROL — SELinux (CIS 1.6)"
 
-    # 1.6.1.1 — SELinux installed
+    # 1.6.1.1: SELinux installed
     if rpm -q libselinux &>/dev/null; then
         log_pass "CIS 1.6.1.1 — SELinux is installed"
     else
         log_fail "CIS 1.6.1.1 — SELinux is NOT installed"
     fi
 
-    # 1.6.1.2 — SELinux not disabled in bootloader
+    # 1.6.1.2: SELinux not disabled in bootloader
     if ! grep -q "selinux=0" /proc/cmdline 2>/dev/null && ! grep -q "enforcing=0" /proc/cmdline 2>/dev/null; then
         log_pass "CIS 1.6.1.2 — SELinux not disabled in bootloader"
     else
         log_fail "CIS 1.6.1.2 — SELinux is disabled via bootloader"
     fi
 
-    # 1.6.1.3 — SELinux policy
+    # 1.6.1.3: SELinux policy
     local policy
     policy=$(sestatus 2>/dev/null | grep "Loaded policy" | awk '{print $NF}')
     if [[ "$policy" == "targeted" ]] || [[ "$policy" == "mls" ]]; then
@@ -298,7 +298,7 @@ mod_selinux() {
         log_fail "CIS 1.6.1.3 — SELinux policy not set to targeted/mls"
     fi
 
-    # 1.6.1.4 — SELinux mode
+    # 1.6.1.4: SELinux mode
     local mode
     mode=$(getenforce 2>/dev/null)
     if [[ "$mode" == "Enforcing" ]]; then
@@ -327,7 +327,7 @@ mod_selinux() {
 
 # ═══════════════════════════════════════════════════════════════════════
 # MODULE 5: NETWORK CONFIGURATION
-# CIS 3.1-3.5 — Network parameters, firewall, IP tables
+# CIS 3.1-3.5: Network parameters, firewall, IP tables
 # ═══════════════════════════════════════════════════════════════════════
 mod_network() {
     log_section "5. NETWORK CONFIGURATION (CIS 3.1-3.5)"
@@ -371,7 +371,7 @@ mod_network() {
         fi
     done
 
-    # 3.4 — Firewall
+    # 3.4: Firewall
     if systemctl is-active firewalld &>/dev/null; then
         log_pass "CIS 3.4.1 — firewalld is active"
     elif systemctl is-active nftables &>/dev/null; then
@@ -410,7 +410,7 @@ mod_network() {
 
 # ═══════════════════════════════════════════════════════════════════════
 # MODULE 6: SSH SERVER HARDENING
-# CIS 5.2 — SSH server configuration
+# CIS 5.2: SSH server configuration
 # ═══════════════════════════════════════════════════════════════════════
 mod_ssh() {
     log_section "6. SSH SERVER HARDENING (CIS 5.2)"
@@ -497,12 +497,12 @@ mod_ssh() {
 
 # ═══════════════════════════════════════════════════════════════════════
 # MODULE 7: USER ACCOUNTS & AUTHENTICATION
-# CIS 5.3-5.6 — PAM, password policy, user settings
+# CIS 5.3-5.6: PAM, password policy, user settings
 # ═══════════════════════════════════════════════════════════════════════
 mod_accounts() {
     log_section "7. USER ACCOUNTS & AUTHENTICATION (CIS 5.3-5.6)"
 
-    # 5.4.1 — Password expiration
+    # 5.4.1: Password expiration
     local max_days min_days warn_days
     max_days=$(grep "^PASS_MAX_DAYS" /etc/login.defs 2>/dev/null | awk '{print $2}')
     min_days=$(grep "^PASS_MIN_DAYS" /etc/login.defs 2>/dev/null | awk '{print $2}')
@@ -536,7 +536,7 @@ mod_accounts() {
         fi
     fi
 
-    # 5.4.2 — System accounts secured
+    # 5.4.2: System accounts secured
     local sys_accounts
     sys_accounts=$(awk -F: '($3 < 1000 && $1 != "root" && $7 != "/sbin/nologin" && $7 != "/bin/false" && $7 != "/usr/sbin/nologin") {print $1}' /etc/passwd 2>/dev/null)
     if [[ -z "$sys_accounts" ]]; then
@@ -545,14 +545,14 @@ mod_accounts() {
         log_fail "CIS 5.4.2 — System accounts with login shell: ${sys_accounts}"
     fi
 
-    # 5.4.3 — Default group for root
+    # 5.4.3: Default group for root
     if [[ "$(grep "^root:" /etc/passwd | cut -d: -f4)" == "0" ]]; then
         log_pass "CIS 5.4.3 — Default group for root is GID 0"
     else
         log_fail "CIS 5.4.3 — Root default group is not GID 0"
     fi
 
-    # 5.4.4 — Default user umask
+    # 5.4.4: Default user umask
     local umask_val
     umask_val=$(grep -E "^\s*umask\s+[0-9]+" /etc/bashrc /etc/profile 2>/dev/null | awk '{print $2}' | head -1)
     if [[ "$umask_val" == "027" ]] || [[ "$umask_val" == "077" ]]; then
@@ -561,14 +561,14 @@ mod_accounts() {
         log_fail "CIS 5.4.4 — Default umask: ${umask_val:-not set} (should be 027 or 077)"
     fi
 
-    # 5.5.2 — Root login restricted to console
+    # 5.5.2: Root login restricted to console
     if [[ -f /etc/securetty ]]; then
         log_pass "CIS 5.5.2 — /etc/securetty exists (root console restricted)"
     else
         log_warn "CIS 5.5.2 — /etc/securetty not found"
     fi
 
-    # 5.6 — su restricted
+    # 5.6: su restricted
     if grep -q "pam_wheel.so" /etc/pam.d/su 2>/dev/null; then
         log_pass "CIS 5.6 — Access to su is restricted via pam_wheel"
     else
@@ -596,12 +596,12 @@ mod_accounts() {
 
 # ═══════════════════════════════════════════════════════════════════════
 # MODULE 8: AUDIT & LOGGING
-# CIS 4.1-4.2 — auditd, rsyslog
+# CIS 4.1-4.2: auditd, rsyslog
 # ═══════════════════════════════════════════════════════════════════════
 mod_logging() {
     log_section "8. AUDIT & LOGGING (CIS 4.1-4.2)"
 
-    # 4.1.1.1 — auditd installed
+    # 4.1.1.1: auditd installed
     if rpm -q audit &>/dev/null; then
         log_pass "CIS 4.1.1.1 — auditd is installed"
     else
@@ -611,7 +611,7 @@ mod_logging() {
         fi
     fi
 
-    # 4.1.1.2 — auditd enabled
+    # 4.1.1.2: auditd enabled
     if systemctl is-enabled auditd &>/dev/null; then
         log_pass "CIS 4.1.1.2 — auditd is enabled"
     else
@@ -621,7 +621,7 @@ mod_logging() {
         fi
     fi
 
-    # 4.1.3 — Audit rules for key events
+    # 4.1.3: Audit rules for key events
     local audit_rules=(
         "-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change"
         "-a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale"
@@ -646,14 +646,14 @@ mod_logging() {
         fi
     fi
 
-    # 4.2.1 — rsyslog installed and running
+    # 4.2.1: rsyslog installed and running
     if rpm -q rsyslog &>/dev/null && systemctl is-active rsyslog &>/dev/null; then
         log_pass "CIS 4.2.1 — rsyslog is installed and active"
     else
         log_fail "CIS 4.2.1 — rsyslog is not active"
     fi
 
-    # 4.2.1.4 — Log file permissions
+    # 4.2.1.4: Log file permissions
     local bad_perms
     bad_perms=$(find /var/log -type f -perm /037 2>/dev/null | head -5 | wc -l)
     if [[ "$bad_perms" -eq 0 ]]; then
@@ -665,7 +665,7 @@ mod_logging() {
 
 # ═══════════════════════════════════════════════════════════════════════
 # MODULE 9: SERVICES
-# CIS 2.1-2.2 — Unnecessary services
+# CIS 2.1-2.2: Unnecessary services
 # ═══════════════════════════════════════════════════════════════════════
 mod_services() {
     log_section "9. SERVICES (CIS 2.1-2.2)"
@@ -701,7 +701,7 @@ mod_services() {
 
 # ═══════════════════════════════════════════════════════════════════════
 # MODULE 10: FILE PERMISSIONS & INTEGRITY
-# CIS 6.1-6.2 — System file permissions, user/group
+# CIS 6.1-6.2: System file permissions, user/group
 # ═══════════════════════════════════════════════════════════════════════
 mod_permissions() {
     log_section "10. FILE PERMISSIONS & INTEGRITY (CIS 6.1-6.2)"
@@ -762,7 +762,7 @@ mod_permissions() {
 
 # ═══════════════════════════════════════════════════════════════════════
 # MODULE 11: LOGIN WARNING BANNERS
-# CIS 1.7 — Warning banners
+# CIS 1.7: Warning banners
 # ═══════════════════════════════════════════════════════════════════════
 mod_banners() {
     log_section "11. LOGIN WARNING BANNERS (CIS 1.7)"
